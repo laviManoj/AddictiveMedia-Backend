@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 
 const authRoutes = require('./routers/authRoutes.js');
 const accountRoutes = require('./routers/accountRoutes.js')
@@ -10,6 +12,12 @@ const connectDB = require('./config/database');
 require('dotenv').config();
 
 const app = express();
+app.use(cors({
+  origin: '*', // or specify allowed origins like ['https://example.com', 'https://another.com']
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,  // if needed
+}));
 
 // Connect to MongoDB
 connectDB();
