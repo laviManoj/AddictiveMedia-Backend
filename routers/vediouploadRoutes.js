@@ -1,5 +1,5 @@
 const express = require('express');
-const funkyPicToCloudSingle = require('../controllers/vedioController');
+const {funkyPicToCloudSingle, funkyPicToCloud} = require('../controllers/vedioController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const multer = require("multer");
 const router = express.Router();
@@ -7,11 +7,11 @@ const router = express.Router();
 // Configure multer for memory storage
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Video upload route
-router.post('/vedioUpload', authMiddleware, upload.single("vedio"), funkyPicToCloudSingle);
+// Video upload route - for multiple files
+router.post('/vedioUpload', authMiddleware, upload.array("videos"), funkyPicToCloudSingle);
 
 // Profile image upload route
-router.post('/profileImage', authMiddleware, upload.single("image"), funkyPicToCloudSingle);
+router.post('/profileImage', authMiddleware, upload.single("image"), funkyPicToCloud);
 
 // Protected route
 router.get('/protected', authMiddleware, (req, res) => {

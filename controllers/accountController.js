@@ -14,7 +14,11 @@ const updateAccount = async (req, res) => {
       user.bioData = bioData;
       user.vediosTitle = videoTitle;
       user.profileImage = profileImage;
-      user.vedio = vedio;
+
+      // Append new videos to the existing array
+      if (vedio && vedio.length > 0) {
+        user.vedio = [...user.vedio, ...vedio];
+      }
 
       await user.save();
 
@@ -40,6 +44,7 @@ const updateAccount = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 const getUserDetails = async (req, res, next) => {
   try {
